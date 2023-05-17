@@ -22,7 +22,7 @@ class WindowPatternGenerator:
         tmp = pixel_arr[i][j][1]
         pixel_arr[i][j][1] = pixel_arr[i][j][2]
         pixel_arr[i][j][2] = tmp
-    return pixel_arr.flatten()[11*3:] if not emulate else self.emulate(pixel_arr)
+    return pixel_arr.flatten()[10*3:] if not emulate else self.emulate(pixel_arr)
 
   def poland_flag_arr(self,top_height,emulate = False):
     # R B G
