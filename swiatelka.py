@@ -24,6 +24,7 @@ parser = argparse.ArgumentParser(prog='swiatelka',
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-f', '--filename', type=str, help='Bitmap file to display')
 group.add_argument('-c', '--color', type=str, help='Solid color: black, white, light_gray, gray, dark_gray, red, pink, purple, light_blue, blue, yellow_green, green, yellow, orange, brown, pale_pink')
+parser.add_argument('-p', '--preview', action='store_true', help='Preview pattern on terminal instead of displaying on the windows')
 args = parser.parse_args()
 
 colors = {
@@ -48,14 +49,20 @@ colors = {
 gen = PatternEngine()
 
 if args.filename:
-    send_arr(gen.arr_from_image(args.filename))
+    if args.preview:
+        gen.print_on_terminal(args.filename)
+    else:
+        send_arr(gen.arr_from_image(args.filename))
 elif args.color:
-    r, g, b = colors[args.color]
-    arr = []
-    for _ in range(129):
-        arr.append(r)
-        arr.append(g)
-        arr.append(b)
-    send_arr(arr)
+    if args.preview:
+        gen.print_color_on_terminal(colors[args.color])
+    else:
+        r, g, b = colors[args.color]
+        arr = []
+        for _ in range(129):
+            arr.append(r)
+            arr.append(g)
+            arr.append(b)
+        send_arr(arr)
 else:
     parser.print_help()
