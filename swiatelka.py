@@ -24,6 +24,7 @@ parser = argparse.ArgumentParser(prog='swiatelka',
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-f', '--filename', type=str, help='Bitmap file to display')
 group.add_argument('-c', '--color', type=str, help='Solid color: black, white, light_gray, gray, dark_gray, red, pink, purple, light_blue, blue, yellow_green, green, yellow, orange, brown, pale_pink')
+group.add_argument('-b', '--blackout', action='store_true', help='Turns off all the lights - changes color to black')
 parser.add_argument('-p', '--preview', action='store_true', help='Preview pattern on terminal instead of displaying on the windows')
 args = parser.parse_args()
 
@@ -64,5 +65,7 @@ elif args.color:
             arr.append(g)
             arr.append(b)
         send_arr(arr)
+elif args.blackout:
+    dmx_device.sendzero()
 else:
     parser.print_help()
