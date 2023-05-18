@@ -23,11 +23,39 @@ parser = argparse.ArgumentParser(prog='swiatelka',
                                  epilog='SKNI')
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-f', '--filename', type=str, help='Bitmap file to display')
+group.add_argument('-c', '--color', type=str, help='Solid color: black, white, light_gray, gray, dark_gray, red, pink, purple, light_blue, blue, yellow_green, green, yellow, orange, brown, pale_pink')
 args = parser.parse_args()
+
+colors = {
+    'black': (0, 0, 0),
+    'white': (255, 255, 255),
+    'light_gray': (224, 224, 224),
+    'gray': (128, 128, 128),
+    'dark_gray': (64, 64, 64),
+    'red': (255, 0, 0),
+    'pink': (255, 96, 208),
+    'purple': (160, 32, 255),
+    'light_blue': (80, 208, 255),
+    'blue': (0, 32, 255),
+    'yellow-green': (96, 255, 128),
+    'green': (0, 192, 0),
+    'yellow': (255, 224, 32),
+    'orange': (255, 160, 16),
+    'brown': (160, 128, 96),
+    'pale_pink': (255, 208, 160)
+}
 
 gen = PatternEngine()
 
 if args.filename:
     send_arr(gen.arr_from_image(args.filename))
+elif args.color:
+    r, g, b = colors[args.color]
+    arr = []
+    for _ in range(129):
+        arr.append(r)
+        arr.append(g)
+        arr.append(b)
+    send_arr(arr)
 else:
     parser.print_help()
