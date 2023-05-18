@@ -1,7 +1,6 @@
 from PIL import Image
 import numpy as np
 import random
-import climage # do wywalenia
 import os
 
 # 28 x 5 - resolution of the "window display"
@@ -39,8 +38,6 @@ class PatternEngine:
         for pixel in row:
           self._print_pixel(pixel)
         print()
-
-    # print(climage.convert("Grafiki/"+name))
   
   def print_color_on_terminal(self,pixel,big = False):
     pixel_arr = np.reshape([list(pixel) for _ in range(140)],(5,28,3))
