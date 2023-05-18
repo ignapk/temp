@@ -42,6 +42,30 @@ class PatternEngine:
 
     # print(climage.convert("Grafiki/"+name))
   
+  def print_color_on_terminal(self,pixel,big = False):
+    pixel_arr = np.reshape([list(pixel) for _ in range(140)],(5,28,3))
+    if big:
+      for row in pixel_arr:
+        for pixel in row:
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+        print()
+        for pixel in row:
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+        print()
+        for pixel in row:
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+          self._print_pixel(pixel)
+        print()
+    else:
+      for row in pixel_arr:
+        for pixel in row:
+          self._print_pixel(pixel)
+        print()
   # returns ready-to-send array of randomly colored pixels
   def random_colors_arr(self,emulate = False):
     out = self._make_random_colors()
@@ -55,8 +79,8 @@ class PatternEngine:
     # return out
     # pass
 
-  def print_all_patterns(self):
-    images = os.listdir("Grafiki")
+  def print_all_patterns(self,path="Grafiki"):
+    images = os.listdir(path)
     i = 1
     for image in images:
       if not image.startswith("."):
@@ -72,7 +96,6 @@ class PatternEngine:
     if extension != "jpg" and extension != "png" and extension != "jpeg" and extension != "bmp":
       print("FORBIDDEN EXTENSION - only .bmp .jpg .jpeg .png allowed (bmp gives most accurate results)")
       return np.reshape(np.zeros(28*5*3),(5,28,3))
-    name = "Grafiki/"+name
     image = np.array(Image.open(name))
     # dozwolony rozmiar tylko 5x28
     if np.shape(image)[0]!=5 or np.shape(image)[1]!=28:
@@ -139,15 +162,3 @@ class PatternEngine:
     windows = Image.fromarray(image_arr)
     windows.show()
     return out.flatten()[12*3:]
-
-
-# testing
-pe = PatternEngine()
-# pe.poland_flag_arr(2,emulate=True)
-# pe.ukraine_flag_arr(2,emulate=True)
-# pe.rainbow_arr(emulate=True)
-# pe.arr_from_image("MFII.jpg", emulate=True)
-# print(pe.animated_rainbow_arr(2))
-# pe.print_on_terminal("MFII.bmp")
-# pe.load_image("MFII.jpg")
-pe.print_all_patterns()
